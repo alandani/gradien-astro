@@ -1,0 +1,92 @@
+---
+import SEO from '../components/SEO.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  publishedDate?: string;
+  modifiedDate?: string;
+  author?: string;
+  tags?: string[];
+  noindex?: boolean;
+  jsonLd?: object;
+}
+
+const { jsonLd, ...seoProps } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <SEO {...seoProps} />
+
+  <!-- JSON-LD Structured Data -->
+  {jsonLd && (
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  )}
+
+  <!-- RSS Feed -->
+  <link rel="alternate" type="application/rss+xml" title="Gradien Digital Indonesia Blog" href="/rss.xml" />
+
+  <style is:global>
+    /* ─── Brand tokens ───────────────────────────────────── */
+    :root {
+      --teal:        #0D7A95;
+      --teal-light:  #1AABCC;
+      --teal-dark:   #074558;
+      --navy:        #08162B;
+      --navy-mid:    #0D2040;
+      --white:       #ffffff;
+      --gray-light:  #F6F9FB;
+      --gray-mid:    #E8EFF4;
+      --text:        #1A2332;
+      --text-muted:  #6B7A8D;
+      --radius:      12px;
+      --radius-lg:   20px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'Inter', system-ui, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { border: none; cursor: pointer; font-family: inherit; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-label { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 14px; }
+    .section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.15; color: var(--text); }
+    .section-title.light { color: var(--white); }
+    .section-desc { font-size: 17px; color: var(--text-muted); max-width: 560px; margin-top: 16px; line-height: 1.7; }
+    .section-desc.light { color: rgba(255,255,255,.72); }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; transition: all .22s ease; }
+    .btn-primary { background: var(--teal-light); color: var(--white); }
+    .btn-primary:hover { background: var(--teal); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,171,204,.35); }
+    .btn-outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,.4); }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.08); }
+    .btn-dark { background: var(--navy); color: var(--white); }
+    .btn-dark:hover { background: var(--teal-dark); transform: translateY(-2px); }
+    .tag { display: inline-block; padding: 5px 14px; border-radius: 50px; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+    .tag-teal { background: rgba(26,171,204,.15); color: var(--teal-light); }
+  </style>
+</head>
+<body>
+  <Nav />
+  <main>
+    <slot />
+  </main>
+  <Footer />
+</body>
+</html>

@@ -1,0 +1,178 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const featured = posts.find(p => p.data.featured);
+const rest = posts.filter(p => !p.data.featured);
+
+const blogJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Gradien Digital Indonesia Blog",
+  "description": "Insights on software development, AI integration, GIS, ERP, and the Indonesian tech industry from the Gradien Digital team.",
+  "url": "https://gradien.co/blog",
+  "publisher": {
+    "@type": "Organization",
+    "name": "CV. Gradien Digital Indonesia",
+    "logo": { "@type": "ImageObject", "url": "https://gradien.co/logo.png" }
+  },
+  "blogPost": posts.map(p => ({
+    "@type": "BlogPosting",
+    "headline": p.data.title,
+    "description": p.data.description,
+    "datePublished": p.data.pubDate.toISOString(),
+    "url": `https://gradien.co/blog/${p.slug}`,
+    "author": { "@type": "Organization", "name": p.data.author }
+  }))
+};
+---
+
+<BaseLayout
+  title="Blog — Gradien Digital Indonesia"
+  description="Insights on software development, AI integration, GIS, ERP Odoo, and the Indonesian tech industry from the Gradien Digital engineering team."
+  tags={["software house blog","GIS Indonesia","AI integration","Odoo ERP","web development Indonesia"]}
+  jsonLd={blogJsonLd}
+>
+
+<div class="blog-index">
+  <!-- Page Header -->
+  <div class="blog-header">
+    <div class="container">
+      <div class="section-label">Insights</div>
+      <h1 class="blog-header-title">From the Gradien Blog</h1>
+      <p class="blog-header-desc">
+        Deep dives into the projects we build, the technology we use, and the lessons we learn — written by our engineering team.
+      </p>
+    </div>
+  </div>
+
+  <div class="container blog-content">
+    <!-- Featured Post -->
+    {featured && (
+      <section class="blog-featured" aria-label="Featured post">
+        <div class="blog-section-label">Featured</div>
+        <div class="blog-featured-grid">
+          <BlogCard
+            title={featured.data.title}
+            description={featured.data.description}
+            pubDate={featured.data.pubDate}
+            heroImage={featured.data.heroImage}
+            heroImageAlt={featured.data.heroImageAlt}
+            tags={featured.data.tags}
+            slug={featured.slug}
+            readingTime={featured.data.readingTime}
+            featured={true}
+          />
+        </div>
+      </section>
+    )}
+
+    <!-- All Posts -->
+    <section class="blog-all" aria-label="All posts">
+      <div class="blog-section-label">All Articles</div>
+      <div class="blog-grid">
+        {rest.map(post => (
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            heroImage={post.data.heroImage}
+            heroImageAlt={post.data.heroImageAlt}
+            tags={post.data.tags}
+            slug={post.slug}
+            readingTime={post.data.readingTime}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Tags -->
+    <section class="blog-topics" aria-label="Browse by topic">
+      <div class="blog-section-label">Browse by Topic</div>
+      <div class="blog-topic-list">
+        {[...new Set(posts.flatMap(p => p.data.tags))].map(tag => (
+          <span class="blog-topic-chip">{tag}</span>
+        ))}
+      </div>
+    </section>
+  </div>
+</div>
+
+</BaseLayout>
+
+<style>
+  .blog-header {
+    background: var(--navy);
+    padding: 120px 0 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .blog-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 80% 50%, rgba(26,171,204,.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .blog-header-title {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .blog-header-desc {
+    font-size: 17px;
+    color: rgba(255,255,255,.6);
+    max-width: 540px;
+    line-height: 1.7;
+  }
+
+  .blog-content {
+    padding: 72px 24px 96px;
+  }
+
+  .blog-section-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .blog-featured { margin-bottom: 72px; }
+  .blog-featured-grid { display: grid; }
+
+  .blog-all { margin-bottom: 64px; }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 700px) { .blog-grid { grid-template-columns: 1fr; } }
+
+  .blog-topics { padding-top: 48px; border-top: 1px solid var(--gray-mid); }
+  .blog-topic-list { display: flex; flex-wrap: wrap; gap: 10px; }
+  .blog-topic-chip {
+    background: var(--gray-light);
+    border: 1px solid var(--gray-mid);
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: default;
+    transition: background .2s, color .2s;
+  }
+  .blog-topic-chip:hover {
+    background: rgba(26,171,204,.1);
+    color: var(--teal);
+    border-color: transparent;
+  }
+</style>

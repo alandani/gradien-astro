@@ -1,0 +1,404 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, author, tags, readingTime } = post.data;
+
+const formattedPubDate = pubDate.toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric',
+});
+const isoDate = pubDate.toISOString();
+const isoUpdated = updatedDate?.toISOString();
+
+const ogImage = heroImage?.startsWith('http') ? heroImage : `https://gradien.co${heroImage}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "image": ogImage,
+  "author": {
+    "@type": "Organization",
+    "name": author ?? "CV. Gradien Digital Indonesia",
+    "url": "https://gradien.co"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "CV. Gradien Digital Indonesia",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://gradien.co/logo.png"
+    }
+  },
+  "datePublished": isoDate,
+  "dateModified": isoUpdated ?? isoDate,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://gradien.co/blog/${post.slug}`
+  },
+  "keywords": tags?.join(', ')
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  ogType="article"
+  publishedDate={isoDate}
+  modifiedDate={isoUpdated}
+  author={author}
+  tags={tags}
+  jsonLd={articleJsonLd}
+>
+  <article class="blog-post">
+    <!-- Hero -->
+    <div class="blog-hero">
+      <div class="blog-hero-inner">
+        <div class="blog-meta">
+          {tags?.slice(0, 2).map(tag => (
+            <span class="blog-tag">{tag}</span>
+          ))}
+        </div>
+        <h1 class="blog-title">{title}</h1>
+        <p class="blog-description">{description}</p>
+        <div class="blog-byline">
+          <div class="blog-author-avatar">G</div>
+          <div>
+            <span class="blog-author-name">{author ?? 'Gradien Digital'}</span>
+            <div class="blog-date-row">
+              <time datetime={isoDate}>{formattedPubDate}</time>
+              {readingTime && <span class="blog-reading-time">· {readingTime} min read</span>}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cover Image -->
+    {heroImage && (
+      <div class="blog-cover-wrap">
+        <img
+          src={heroImage}
+          alt={heroImageAlt ?? title}
+          class="blog-cover"
+          loading="eager"
+          decoding="async"
+          width="1200"
+          height="630"
+        />
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="blog-content-wrap">
+      <div class="blog-content prose">
+        <slot />
+      </div>
+
+      <!-- Tags -->
+      {tags && tags.length > 0 && (
+        <div class="blog-tags-section">
+          <span class="blog-tags-label">Topics:</span>
+          <div class="blog-tags-list">
+            {tags.map(tag => (
+              <span class="blog-tag-pill">{tag}</span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Back to blog -->
+      <div class="blog-back">
+        <a href="/blog" class="blog-back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"/></svg>
+          Back to Blog
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  /* ── Blog Hero ── */
+  .blog-hero {
+    background: var(--navy);
+    padding: 120px 0 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .blog-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 70% 50%, rgba(26,171,204,.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .blog-hero-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .blog-meta {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .blog-tag {
+    background: rgba(26,171,204,.2);
+    color: var(--teal-light);
+    border: 1px solid rgba(26,171,204,.3);
+    border-radius: 50px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .blog-title {
+    font-size: clamp(28px, 4.5vw, 52px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+  .blog-description {
+    font-size: 18px;
+    color: rgba(255,255,255,.65);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    max-width: 660px;
+  }
+  .blog-byline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .blog-author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--teal-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+  .blog-author-name {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .blog-date-row {
+    font-size: 13px;
+    color: rgba(255,255,255,.5);
+    margin-top: 2px;
+  }
+  .blog-reading-time {
+    margin-left: 4px;
+  }
+
+  /* ── Cover Image ── */
+  .blog-cover-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+    margin-top: -32px;
+    position: relative;
+    z-index: 2;
+  }
+  .blog-cover {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0,0,0,.3);
+  }
+
+  /* ── Content ── */
+  .blog-content-wrap {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+  }
+
+  /* ── Prose styles ── */
+  .prose :global(h2) {
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 800;
+    color: var(--text);
+    margin: 48px 0 16px;
+    line-height: 1.2;
+    letter-spacing: -.5px;
+  }
+  .prose :global(h3) {
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 700;
+    color: var(--text);
+    margin: 36px 0 12px;
+    line-height: 1.3;
+  }
+  .prose :global(p) {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #2A3544;
+    margin-bottom: 24px;
+  }
+  .prose :global(ul), .prose :global(ol) {
+    margin: 0 0 24px 24px;
+    list-style: disc;
+  }
+  .prose :global(ol) { list-style: decimal; }
+  .prose :global(li) {
+    font-size: 17px;
+    line-height: 1.75;
+    color: #2A3544;
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+  .prose :global(blockquote) {
+    border-left: 4px solid var(--teal-light);
+    background: var(--gray-light);
+    padding: 20px 24px;
+    border-radius: 0 8px 8px 0;
+    margin: 32px 0;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .prose :global(code) {
+    background: var(--gray-light);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+    color: var(--teal-dark);
+  }
+  .prose :global(pre) {
+    background: var(--navy);
+    padding: 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin: 32px 0;
+  }
+  .prose :global(pre code) {
+    background: none;
+    padding: 0;
+    color: #cdd6f4;
+    font-size: 14px;
+  }
+  .prose :global(a) {
+    color: var(--teal);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: rgba(13,122,149,.3);
+    transition: color .2s;
+  }
+  .prose :global(a:hover) { color: var(--teal-light); }
+  .prose :global(hr) {
+    border: none;
+    height: 1px;
+    background: var(--gray-mid);
+    margin: 48px 0;
+  }
+  .prose :global(strong) { font-weight: 700; color: var(--text); }
+
+  /* ── Blog Images (used in MDX) ── */
+  .prose :global(.blog-image-block) {
+    margin: 40px 0;
+  }
+  .prose :global(.blog-image-block img) {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.1);
+  }
+  .prose :global(.blog-image-caption) {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    font-style: italic;
+  }
+  .prose :global(.blog-image-grid) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 40px 0;
+  }
+  .prose :global(.blog-image-grid img) {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.1);
+  }
+  @media (max-width: 600px) {
+    .prose :global(.blog-image-grid) { grid-template-columns: 1fr; }
+    .blog-cover { height: 240px; }
+  }
+
+  /* ── Tags section ── */
+  .blog-tags-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--gray-mid);
+    flex-wrap: wrap;
+  }
+  .blog-tags-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .blog-tags-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .blog-tag-pill {
+    background: var(--gray-light);
+    border: 1px solid var(--gray-mid);
+    border-radius: 50px;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  /* ── Back link ── */
+  .blog-back {
+    margin-top: 32px;
+  }
+  .blog-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal);
+    transition: color .2s, gap .2s;
+  }
+  .blog-back-link:hover {
+    color: var(--teal-light);
+    gap: 10px;
+  }
+</style>

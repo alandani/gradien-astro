@@ -1,0 +1,161 @@
+---
+title: "How We Built a GIS Land Registry System for Lampung Provincial Government"
+description: "A deep-dive case study into building a spatial data platform that manages 40,000+ land parcels for a provincial government — from architecture decisions to go-live."
+pubDate: 2025-03-15
+heroImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&fit=crop"
+heroImageAlt: "GIS dashboard showing land parcel maps on a large monitor"
+author: "Gradien Digital Team"
+tags: ["GIS", "Case Study", "Government", "PostGIS", "React"]
+readingTime: 9
+featured: true
+---
+
+import BlogImage from '../../components/BlogImage.astro';
+
+When Lampung Provincial Government approached us to modernize their land registry system, we knew we were stepping into a project with high stakes: 40,000+ land parcels, multiple government departments as users, and a legacy system that ran on paper and Excel spreadsheets.
+
+Eighteen months later, the system is live, handling 500+ daily transactions, and has reduced land dispute resolution time by 60%. Here's how we built it.
+
+---
+
+## The Problem: A Paper-Based System in 2024
+
+The existing land registry process was a cascade of inefficiencies:
+
+- Land ownership records existed in **paper ledgers** spanning 30 years
+- Boundary disputes had no reliable spatial reference — surveyors used hand-drawn maps
+- Cross-department data sharing meant **physically delivering paper reports**
+- No audit trail for record modifications
+
+The provincial government needed a modern GIS platform that could handle spatial queries, multi-user concurrent editing, document management, and role-based access for five departments simultaneously.
+
+<div class="blog-image-block">
+  <img
+    src="https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800&amp;fit=crop"
+    alt="Old paper-based land registry documents stacked in folders"
+    loading="lazy"
+    decoding="async"
+  />
+  <p class="blog-image-caption">The legacy system: decades of paper records needing digitization</p>
+</div>
+
+---
+
+## Architecture: What We Chose and Why
+
+After a 3-week discovery phase with 12 stakeholder interviews, we landed on this stack:
+
+**Spatial Database: PostgreSQL + PostGIS**
+
+PostGIS was the only serious choice for a government-scale GIS application. Its support for geometry types, spatial indexes, and complex topology queries gives us capabilities that no NoSQL solution could match at this scale.
+
+```sql
+-- Example: Finding all parcels within 500m of a disputed boundary
+SELECT p.parcel_id, p.owner_name, p.area_sqm,
+       ST_Distance(p.geom, b.geom) AS distance_m
+FROM land_parcels p
+CROSS JOIN disputed_boundaries b
+WHERE ST_DWithin(p.geom, b.geom, 500)
+  AND p.status = 'active'
+ORDER BY distance_m;
+```
+
+**Map Rendering: MapboxGL JS + GeoServer**
+
+GeoServer handles WMS/WFS tile serving for the heavy spatial data (parcel boundaries, administrative zones). MapboxGL JS renders the interactive map client-side with smooth 60fps performance even at full provincial scale.
+
+**Frontend: React + Vite**
+
+The government required a web application (no native apps — procurement rules). React with Vite gave us the component structure needed for complex GIS workflows: split-panel views, data tables synced with map selection, and multi-step approval flows.
+
+**Backend: FastAPI**
+
+FastAPI's async support was critical for handling concurrent spatial queries. Python's geospatial ecosystem (Shapely, GDAL, Fiona) made file format conversions (Shapefile → GeoJSON → PostGIS) trivial.
+
+<div class="blog-image-grid">
+  <img
+    src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&amp;fit=crop"
+    alt="Architecture diagram on whiteboard"
+    loading="lazy"
+    decoding="async"
+  />
+  <img
+    src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&amp;fit=crop"
+    alt="Developer working on GIS code at dual monitors"
+    loading="lazy"
+    decoding="async"
+  />
+</div>
+<p class="blog-image-caption">Architecture planning sessions and development in progress</p>
+
+---
+
+## The Data Migration: 30 Years of Paper Records
+
+This was the hardest part of the project — and the part we're most proud of.
+
+We ran a **6-month parallel operation** where:
+1. Paper records were scanned and OCR'd using a custom Python pipeline
+2. Spatial boundaries were digitized by a team of 4 GIS technicians using QGIS
+3. Every digitized parcel went through a 3-step verification: automated validation → human review → supervisor sign-off
+4. Existing database records (from a 2010-era Access database) were ETL'd into PostGIS
+
+**Data quality was brutal.** About 23% of parcels had overlapping boundaries from years of manual survey errors. We built a conflict detection tool that flagged these automatically and created a resolution workflow for the land registry officers to adjudicate.
+
+> "We expected the migration to be painful. But Gradien's validation tooling caught things we'd missed for 20 years." — Ir. Budi Santoso, Head of IT, Pemprov Lampung
+
+---
+
+## Performance: Spatial Queries at Scale
+
+With 40,000+ parcels and growing, spatial query performance was non-negotiable. A few techniques that made a real difference:
+
+**Spatial indexing with GIST:**
+```sql
+CREATE INDEX idx_land_parcels_geom 
+ON land_parcels USING GIST (geom);
+```
+
+**Tile caching via GeoServer + GWC:** Pre-rendered tiles at zoom levels 10–18 reduced map load time from 8 seconds to under 1.5 seconds.
+
+**Materialized views for reporting:** Complex cross-joins for the tax and planning departments run against materialized views refreshed nightly, rather than hitting the main parcel table.
+
+<div class="blog-image-block">
+  <img
+    src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&amp;fit=crop"
+    alt="Multiple monitors showing GIS system dashboard with maps and data tables"
+    loading="lazy"
+    decoding="async"
+  />
+  <p class="blog-image-caption">The live GIS dashboard used daily by land registry officers across five departments</p>
+</div>
+
+---
+
+## Results: 6 Months Post-Launch
+
+After six months in production:
+
+- **500+ daily transactions** processed through the system
+- **60% reduction** in land dispute resolution time (from avg. 45 days to 18 days)
+- **98.7% data accuracy** on migrated parcels (verified through random sampling)
+- **5 departments** actively using the system concurrently
+- **Zero system downtime** in the first 90 days after go-live
+
+The system is now being considered as a template for two neighboring provinces.
+
+---
+
+## What We Learned
+
+**Discovery time is never wasted.** We spent 3 weeks on discovery before writing a single line of code. That investment paid back 10x by avoiding expensive rework mid-project.
+
+**Government projects need extra change management.** The technology was the easy part. Getting 80 government employees to abandon paper workflows took structured training, a helpdesk, and a lot of patience.
+
+**PostGIS is genuinely impressive.** We pushed it hard — complex topology queries, large bulk imports, concurrent writes — and it handled everything without complaint.
+
+If you're working on a GIS or spatial data project, we'd love to talk. [Contact us →](/contact)
+
+---
+
+*This case study was written by the Gradien Digital engineering team. Client details shared with permission.*

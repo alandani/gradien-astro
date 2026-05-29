@@ -1,0 +1,197 @@
+---
+const year = new Date().getFullYear();
+
+const services = [
+  'Mobile App Development',
+  'Web Development',
+  'ERP Odoo',
+  'AI Integration',
+  'GIS Solutions',
+  'Data Analytics',
+  'UI/UX Design',
+  'IT Consulting',
+];
+
+const links = [
+  { label: 'Services', href: '/#services' },
+  { label: 'About', href: '/#about' },
+  { label: 'Portfolio', href: '/#portfolio' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contact', href: '/#contact' },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="/" class="footer-logo" aria-label="Gradien Digital Indonesia">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="40" height="40" rx="10" fill="#1AABCC"/>
+            <path d="M20 8C13.373 8 8 13.373 8 20C8 26.627 13.373 32 20 32C23.5 32 26.65 30.5 28.85 28.1L25.4 24.65C24 26.1 22.1 27 20 27C16.134 27 13 23.866 13 20C13 16.134 16.134 13 20 13C22.1 13 24 13.9 25.4 15.35L28.85 11.9C26.65 9.5 23.5 8 20 8Z" fill="white"/>
+            <path d="M28 18H22V22H28V18Z" fill="white" opacity="0.8"/>
+          </svg>
+          <span>Gradien</span>
+        </a>
+        <p class="footer-tagline">
+          Software house based in Bandar Lampung, Indonesia. Building digital products that make an impact.
+        </p>
+        <address class="footer-contact">
+          <a href="mailto:business@gradien.co" class="footer-contact-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            business@gradien.co
+          </a>
+          <a href="tel:+6285157012200" class="footer-contact-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.99-2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.09a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +62 851 5701 2200
+          </a>
+        </address>
+      </div>
+
+      <!-- Services -->
+      <div class="footer-col">
+        <h3 class="footer-col-title">Services</h3>
+        <ul class="footer-list">
+          {services.map(s => <li>{s}</li>)}
+        </ul>
+      </div>
+
+      <!-- Links -->
+      <div class="footer-col">
+        <h3 class="footer-col-title">Company</h3>
+        <ul class="footer-list">
+          {links.map(({ label, href }) => (
+            <li><a href={href} class="footer-link">{label}</a></li>
+          ))}
+        </ul>
+        <div class="footer-rss">
+          <a href="/rss.xml" class="footer-rss-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
+            RSS Feed
+          </a>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="footer-col">
+        <h3 class="footer-col-title">Location</h3>
+        <p class="footer-address">
+          Jl. Anggrek No. 37<br/>
+          Rawa Laut, Enggal<br/>
+          Bandar Lampung 35213<br/>
+          Indonesia
+        </p>
+        <p class="footer-hours">
+          Mon – Fri · 09:00–17:00 WIB
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© {year} CV. Gradien Digital Indonesia. All rights reserved.</p>
+      <p class="footer-legal">
+        Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="footer-link">Astro</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--navy);
+    color: rgba(255,255,255,.7);
+    padding: 72px 0 0;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  @media (max-width: 900px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 540px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+
+  .footer-logo {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 20px; font-weight: 800; color: var(--white);
+    margin-bottom: 16px;
+    text-decoration: none;
+  }
+  .footer-logo svg { width: 36px; height: 36px; }
+  .footer-tagline {
+    font-size: 14px; line-height: 1.7;
+    color: rgba(255,255,255,.55);
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+  .footer-contact { display: flex; flex-direction: column; gap: 10px; font-style: normal; }
+  .footer-contact-link {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: rgba(255,255,255,.6);
+    transition: color .2s;
+    text-decoration: none;
+  }
+  .footer-contact-link:hover { color: var(--teal-light); }
+
+  .footer-col-title {
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: rgba(255,255,255,.4);
+    margin-bottom: 20px;
+  }
+  .footer-list { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+  .footer-list li { font-size: 14px; color: rgba(255,255,255,.6); }
+  .footer-link {
+    color: rgba(255,255,255,.6);
+    font-size: 14px;
+    transition: color .2s;
+    text-decoration: none;
+  }
+  .footer-link:hover { color: var(--teal-light); }
+  .footer-rss { margin-top: 20px; }
+  .footer-rss-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: rgba(255,255,255,.4);
+    transition: color .2s;
+    text-decoration: none;
+  }
+  .footer-rss-link:hover { color: var(--teal-light); }
+
+  .footer-address {
+    font-size: 14px; line-height: 1.8;
+    color: rgba(255,255,255,.6);
+    font-style: normal;
+    margin-bottom: 12px;
+  }
+  .footer-hours {
+    font-size: 13px;
+    color: rgba(255,255,255,.4);
+  }
+
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .footer-copy {
+    font-size: 13px;
+    color: rgba(255,255,255,.35);
+  }
+  .footer-legal {
+    font-size: 13px;
+    color: rgba(255,255,255,.35);
+  }
+  .footer-legal a {
+    color: rgba(255,255,255,.5);
+    text-decoration: none;
+  }
+  .footer-legal a:hover { color: var(--teal-light); }
+</style>

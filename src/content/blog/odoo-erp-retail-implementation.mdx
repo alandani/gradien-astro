@@ -1,0 +1,196 @@
+---
+title: "Odoo 17 ERP Implementation for a 12-Outlet Retail Chain: A Complete Case Study"
+description: "How we implemented Odoo 17 across a 12-outlet Indonesian retail chain — covering POS, inventory, accounting, and HR — and what we'd do differently next time."
+pubDate: 2025-01-28
+updatedDate: 2025-02-10
+heroImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&fit=crop"
+heroImageAlt: "Modern retail store with digital point-of-sale systems"
+author: "Gradien Digital Team"
+tags: ["ERP", "Odoo", "Case Study", "Retail", "Indonesia"]
+readingTime: 8
+featured: false
+---
+
+Running 12 retail outlets across three cities with a disconnected mix of point-of-sale software, QuickBooks for accounting, and WhatsApp for inter-store communication is a common story for growing Indonesian retailers. It was the situation PT Maju Bersama found themselves in when they came to us.
+
+Six months later: unified inventory, real-time financial reporting, automated purchase orders, and HR payroll running on a single Odoo 17 instance. Here's the full story.
+
+---
+
+## The Client: PT Maju Bersama
+
+PT Maju Bersama is a fashion and accessories retailer with 12 outlets in Lampung, South Sumatra, and Bengkulu. Founded in 2015, they had grown organically — adding stores faster than they could build proper systems to manage them.
+
+**Before Odoo, the pain was real:**
+- Inventory discrepancies between stores discovered only at month-end
+- Accountants spending 10+ hours per week manually reconciling POS data into QuickBooks
+- No visibility into which products were underperforming across the chain
+- HR payroll calculated manually in Excel across 180+ employees
+- Zero real-time data — management decisions made on data that was 2–4 weeks old
+
+<div class="blog-image-block">
+  <img
+    src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&amp;fit=crop"
+    alt="Busy retail store interior with clothing racks and customers"
+    loading="lazy"
+    decoding="async"
+  />
+  <p class="blog-image-caption">PT Maju Bersama operates 12 outlets across Lampung, South Sumatra, and Bengkulu</p>
+</div>
+
+---
+
+## Why Odoo 17?
+
+We evaluated three options with the client: Odoo, SAP Business One, and building a custom system.
+
+SAP B1 was eliminated on cost — licensing and implementation for a 12-outlet retailer was 3–4x the Odoo budget, and the ongoing support costs were prohibitive. Building custom was eliminated on timeline — they needed a system live before the Lebaran season peak.
+
+Odoo 17 won because:
+- **Native POS module** that works offline (critical for stores with unstable internet)
+- **Strong Indonesian localization** — NPWP, e-Faktur, PPh 21 payroll calculations are built-in
+- **Community + Enterprise licensing** let us use community modules for non-critical functions and enterprise where they needed it
+- **Python-based customization** — our team has deep Python expertise
+
+---
+
+## Implementation: The 20-Week Plan
+
+We structured the implementation in four phases to minimize business disruption:
+
+**Phase 1 (Weeks 1–4): Foundation**
+- Server setup and Odoo 17 installation (self-hosted on their existing server infrastructure)
+- Chart of accounts migration and configuration
+- Product catalog import (12,000+ SKUs)
+- User roles and access control
+
+**Phase 2 (Weeks 5–10): Core Modules**
+- Inventory: multi-location, stock moves, landed costs
+- Purchase: vendor management, PO approval workflows
+- Sales: quotations, order management
+- Accounting: journal entries, bank reconciliation, tax configurations
+
+**Phase 3 (Weeks 11–16): POS & HR**
+- POS configuration and hardware setup across all 12 outlets
+- Payroll: PPh 21 calculation, BPJS Ketenagakerjaan, BPJS Kesehatan
+- Leave management, attendance tracking
+
+**Phase 4 (Weeks 17–20): Training, UAT & Go-Live**
+- Department-specific training for accounting, purchasing, HR, and store managers
+- Parallel operation period (old system + Odoo running simultaneously)
+- Cutover and post-launch support
+
+<div class="blog-image-grid">
+  <img
+    src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&amp;fit=crop"
+    alt="Training session with employees learning new ERP system"
+    loading="lazy"
+    decoding="async"
+  />
+  <img
+    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&amp;fit=crop"
+    alt="Retail inventory management dashboard on computer screen"
+    loading="lazy"
+    decoding="async"
+  />
+</div>
+<p class="blog-image-caption">Staff training sessions and the Odoo inventory dashboard in action</p>
+
+---
+
+## The Technical Challenges
+
+### POS Offline Mode
+
+Three of their 12 outlets are in locations with unreliable internet. Odoo's POS has a native offline mode, but we extended it to handle:
+- Loyalty point calculations offline
+- Customer lookup from a local cache (synced daily)
+- Stock reservation during offline periods to prevent overselling
+
+```python
+# Custom offline stock reservation module
+class PosOrderLine(models.Model):
+    _inherit = 'pos.order.line'
+    
+    def _compute_offline_stock_reserve(self):
+        """Reserve stock during offline sessions to prevent overselling"""
+        for line in self:
+            if line.order_id.session_id.state == 'offline':
+                product = line.product_id
+                available_qty = self._get_local_stock(product)
+                if available_qty < line.qty:
+                    raise UserError(
+                        f'Insufficient stock for {product.name}. '
+                        f'Available: {available_qty}'
+                    )
+```
+
+### Indonesian Tax Compliance: e-Faktur Integration
+
+Odoo 17 ships with basic Indonesian tax support, but e-Faktur integration (required for PKP companies) needed custom work. We built a module that:
+- Generates e-Faktur-formatted XML from Odoo tax invoices
+- Validates NPWP numbers against the DJP format
+- Maintains a sequential faktur number registry
+
+This took 3 weeks to build, test, and validate with the client's accountant and tax consultant. It's now one of the most-used features in the system.
+
+### Stock Valuation: Moving Average vs. FIFO
+
+This was a two-day discussion with the client's accountant and finance director. Fashion retail with seasonal collections creates complex inventory valuation questions.
+
+We ultimately chose **Moving Average Cost** because:
+- Simpler to explain to non-accountants
+- More appropriate for their product mix (accessories with stable costs, fashion items with seasonal variation)
+- Less administrative overhead when returns happen
+
+<div class="blog-image-block">
+  <img
+    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&amp;fit=crop"
+    alt="Financial analytics dashboard showing charts and business metrics"
+    loading="lazy"
+    decoding="async"
+  />
+  <p class="blog-image-caption">Real-time financial dashboards replaced the 2-week reporting lag of the old system</p>
+</div>
+
+---
+
+## Results: 4 Months Post-Launch
+
+**Inventory accuracy:** Discrepancy rate dropped from ~8% monthly (discovered at month-end) to under 0.5% real-time (caught immediately by the system).
+
+**Accounting efficiency:** Month-end close time reduced from 12 days to 4 days. The accounting team of 3 now handles the same workload they previously needed 5 people for.
+
+**HR:** Payroll processing time dropped from 5 days (manual Excel calculation) to 1 day. Zero payroll errors in 4 months (previously averaging 8–10 corrections per cycle).
+
+**Management visibility:** The operations director now reviews a 15-minute daily dashboard instead of waiting for weekly reports. Out-of-stock situations are caught before they become lost sales.
+
+> "The inventory changes alone justified the entire project cost within two months. We were losing sales we didn't even know about." — Ratna Dewi, Operations Director, PT Maju Bersama
+
+---
+
+## What We'd Do Differently
+
+**More time on data cleaning before migration.** We allocated 3 weeks for product catalog cleaning and it took 6. Legacy data is always messier than the client thinks.
+
+**Earlier accountant involvement.** We brought in their external tax consultant in week 14 for e-Faktur validation. We should have had them in week 4 to define requirements. This caused a 2-week delay.
+
+**Phased POS rollout by outlet.** We launched all 12 POS outlets in a single weekend. It worked, but it was unnecessarily stressful. A rolling launch (4 outlets per week) would have been lower risk.
+
+---
+
+## Is Odoo Right for Your Business?
+
+Odoo is an excellent fit for Indonesian SMEs and mid-market companies with 20–500 employees if:
+
+- You need multi-module integration (inventory + accounting + HR + sales in one system)
+- You want a system that can grow with you (Odoo scales from a 3-person startup to enterprise)
+- You have budget for implementation — **the license is only part of the cost**. A proper implementation is 2–4x the license cost, and skimping here is where projects fail.
+
+It's not the right fit if you need deep industry-specific functionality (hospital systems, construction project management) where purpose-built software is usually better.
+
+Thinking about Odoo for your business? [Talk to our team →](/contact) — we'll give you an honest assessment of fit, timeline, and budget before you commit.
+
+---
+
+*CV. Gradien Digital Indonesia is an Odoo implementation partner with projects across retail, government, healthcare, and manufacturing sectors. All client details in this case study are shared with explicit permission.*
