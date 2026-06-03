@@ -14,11 +14,11 @@ const homeJsonLd = {
     {
       "@type": "Organization",
       "@id": "https://gradien.co/#organization",
-      "name": "CV. Gradien Digital Indonesia",
+      "name": "Gradien Digital Indonesia",
       "alternateName": "Gradien Digital",
       "url": "https://gradien.co",
       "logo": { "@type": "ImageObject", "url": "https://gradien.co/logo.png", "width": 200, "height": 200 },
-      "description": "Software house based in Bandar Lampung, Indonesia. Specialists in mobile app, web development, ERP Odoo, AI integration, GIS, and data analytics.",
+      "description": "Gradien Digital Indonesia — your partner for smarter digital solutions. We build custom websites, mobile apps, and enterprise systems with AI embedded in our process.",
       "foundingDate": "2020",
       "email": "business@gradien.co",
       "telephone": "+6285157012200",
@@ -60,60 +60,52 @@ const homeJsonLd = {
       "@id": "https://gradien.co/#website",
       "url": "https://gradien.co",
       "name": "Gradien Digital Indonesia",
-      "description": "Software house Bandar Lampung — mobile app, web, ERP, AI, GIS",
+      "description": "Your Partner for Smarter Digital Solutions — custom software development powered by AI",
       "publisher": { "@id": "https://gradien.co/#organization" }
     }
   ]
 };
 
-const services = [
-  {
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
-    title: 'Mobile App Development',
-    desc: 'Native and cross-platform apps for iOS & Android. From fintech to logistics, we build apps users love.',
-    tags: ['Flutter', 'React Native', 'iOS', 'Android'],
-  },
+const coreServices = [
   {
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
     title: 'Web Development',
-    desc: 'Scalable web applications with modern frameworks. From landing pages to enterprise portals.',
-    tags: ['React', 'Next.js', 'Astro', 'Laravel'],
+    desc: 'We build websites and web applications that do more than look good — from company profiles to complex web platforms, every project is custom-built to fit your business goals and built to perform.',
+    tags: ['React', 'Next.js', 'Laravel', 'Vue.js'],
   },
   {
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z M9 9h6M9 12h6M9 15h4"/></svg>`,
-    title: 'ERP Odoo',
-    desc: 'Full-cycle Odoo implementation, customization, and training. Streamline your business operations.',
-    tags: ['Odoo 17', 'Accounting', 'Inventory', 'CRM'],
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+    title: 'Mobile Development',
+    desc: 'Cross-platform mobile apps built for real users. We design and develop iOS and Android apps that are fast, intuitive, and aligned with how your customers actually work.',
+    tags: ['Flutter', 'React Native', 'iOS', 'Android'],
   },
   {
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M22 2L12 12M15 2h7v7"/></svg>`,
     title: 'AI Integration',
-    desc: 'Embed intelligent automation into your products. LLMs, computer vision, NLP, and custom ML models.',
+    desc: 'We embed AI into your existing systems and workflows — from intelligent document processing to internal assistants and smart analytics — so your software doesn\'t just run your business, it learns from it.',
     tags: ['OpenAI', 'LangChain', 'Python', 'TensorFlow'],
+    featured: true,
   },
+];
+
+const extendedServices = [
   {
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 3v9h9"/></svg>`,
-    title: 'GIS Solutions',
-    desc: 'Geographic information systems for mapping, spatial analysis, and location intelligence.',
-    tags: ['QGIS', 'MapboxGL', 'PostGIS', 'Leaflet'],
-  },
-  {
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
-    title: 'Data Analytics',
-    desc: 'Turn raw data into actionable insights. Dashboards, reports, and predictive analytics.',
-    tags: ['Python', 'Tableau', 'Power BI', 'BigQuery'],
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2M8 11h8M8 15h5"/></svg>`,
+    title: 'ERP (Odoo)',
+    desc: 'We implement, customize, and optimize Odoo ERP for businesses that need a system that actually fits their operations — not the other way around.',
+    tags: ['Odoo', 'Accounting', 'Inventory', 'CRM'],
   },
   {
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`,
     title: 'UI/UX Design',
-    desc: 'User-centered design that converts. Wireframes, prototypes, and design systems.',
+    desc: 'Great software starts with great design. We craft interfaces that are intuitive, on-brand, and built around how your users think and move.',
     tags: ['Figma', 'User Research', 'Prototyping'],
   },
   {
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
     title: 'IT Consulting',
-    desc: 'Strategic technology guidance. Architecture review, digital transformation roadmap, and training.',
-    tags: ['Strategy', 'Architecture', 'Training'],
+    desc: 'Not sure where to start with your digital journey? We help you cut through the noise — evaluating your current systems, identifying the right technology, and building a roadmap that makes sense for your business.',
+    tags: ['Strategy', 'Architecture', 'Roadmap'],
   },
 ];
 
@@ -162,49 +154,83 @@ const portfolioItems = [
   },
 ];
 
-const techStack = {
-  'Mobile': ['Flutter', 'React Native', 'Swift', 'Kotlin'],
-  'Frontend': ['React', 'Next.js', 'Astro', 'Vue.js', 'TypeScript'],
-  'Backend': ['Laravel', 'FastAPI', 'Node.js', 'Django', 'Go'],
-  'Data & AI': ['Python', 'TensorFlow', 'LangChain', 'Power BI', 'BigQuery'],
-  'GIS': ['QGIS', 'PostGIS', 'Mapbox GL', 'Leaflet', 'GeoServer'],
-  'ERP': ['Odoo 17', 'PostgreSQL', 'Python ORM'],
-  'DevOps': ['Docker', 'GitHub Actions', 'AWS', 'Nginx', 'Linux'],
-};
+const techStack = [
+  // Mobile
+  { name: 'Flutter', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg' },
+  { name: 'React Native', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
+  { name: 'Kotlin', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg' },
+  { name: 'Swift', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swift/swift-original.svg' },
+  // Frontend
+  { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
+  { name: 'Next.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg' },
+  { name: 'Vue.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg' },
+  { name: 'Astro', logo: 'https://cdn.simpleicons.org/astro/FF5D01' },
+  { name: 'TypeScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
+  // Backend
+  { name: 'Laravel', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg' },
+  { name: 'Node.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg' },
+  { name: 'Python', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg' },
+  { name: 'FastAPI', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg' },
+  { name: 'Django', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg' },
+  { name: 'Go', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg' },
+  { name: 'Streamlit', logo: 'https://cdn.simpleicons.org/streamlit/FF4B4B' },
+  // Database & ERP
+  { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' },
+  { name: 'MySQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg' },
+  { name: 'Odoo', logo: 'https://cdn.simpleicons.org/odoo/714B67' },
+  // AI & ML
+  { name: 'TensorFlow', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg' },
+  { name: 'OpenAI', logo: 'https://api.iconify.design/simple-icons:openai.svg?color=%23333333' },
+  { name: 'Claude', logo: 'https://cdn.simpleicons.org/anthropic/191919' },
+  { name: 'LangChain', logo: 'https://cdn.simpleicons.org/langchain/1C3C3C' },
+  { name: 'OpenClaw', logo: 'https://openclaw.ai/favicon.svg' },
+  { name: 'Hugging Face', logo: 'https://cdn.simpleicons.org/huggingface/FFD21E' },
+  { name: 'n8n', logo: 'https://cdn.simpleicons.org/n8n/EA4B71' },
+  // DevOps & Cloud
+  { name: 'Docker', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg' },
+  { name: 'AWS', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg' },
+  { name: 'Google Cloud', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg' },
+  { name: 'Linux', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg' },
+  { name: 'GitHub', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg' },
+  { name: 'Grafana', logo: 'https://cdn.simpleicons.org/grafana/F46800' },
+  { name: 'Prometheus', logo: 'https://cdn.simpleicons.org/prometheus/E6522C' },
+  // Data & GIS
+  { name: 'Metabase', logo: 'https://cdn.simpleicons.org/metabase/509EE3' },
+  { name: 'QGIS', logo: 'https://cdn.simpleicons.org/qgis/589632' },
+  { name: 'Leaflet', logo: 'https://cdn.simpleicons.org/leaflet/199900' },
+  { name: 'Mapbox', logo: 'https://cdn.simpleicons.org/mapbox/1A1A1A' },
+];
 
 const testimonials = [
   {
-    quote: "Gradien delivered our GIS system on time and within budget. Their attention to spatial data accuracy and clean UI was exceptional.",
-    name: "Ir. Budi Santoso",
-    role: "Head of IT, Lampung Provincial Government",
-    initials: "BS",
+    quote: "Gradien memahami kebutuhan kami dengan baik dan menghadirkan solusi yang tepat. Tim mereka responsif dan selalu siap membantu bahkan setelah proyek selesai.",
+    role: "Project Manager, DPD Gerindra Prov. Lampung",
+    initials: "G",
   },
   {
-    quote: "The Odoo implementation was smooth and the team's support during go-live was outstanding. Our inventory errors dropped by 80%.",
-    name: "Ratna Dewi",
-    role: "Operations Director, PT Maju Bersama",
-    initials: "RD",
+    quote: "Implementasi sistem berjalan lancar dan tim Gradien sangat suportif selama proses go-live. Solusi yang mereka bangun benar-benar sesuai dengan alur kerja kami.",
+    role: "Operations Director, PT Tunas Dwipa Matra",
+    initials: "T",
   },
   {
-    quote: "Our Flutter app went from zero to App Store in 14 weeks. Gradien managed scope, quality, and deadlines better than any team I've worked with.",
-    name: "Ahmad Fauzan",
-    role: "CEO, LogiTrack Indonesia",
-    initials: "AF",
+    quote: "Gradien tidak hanya membangun aplikasi — mereka benar-benar mengerti bisnis kami dan memberikan saran yang membantu kami berkembang secara digital.",
+    role: "Director, PT Way Kanan Makmur",
+    initials: "W",
   },
 ];
 
 const processSteps = [
-  { number: '01', title: 'Discovery', desc: 'We deep-dive into your goals, users, and constraints. Requirements are documented and scope is locked.' },
-  { number: '02', title: 'Design', desc: 'Wireframes, prototypes, and architecture blueprints. You approve before we write a single line of code.' },
-  { number: '03', title: 'Build', desc: 'Agile sprints with weekly demos. Full transparency — you see the product grow in real time.' },
-  { number: '04', title: 'Launch', desc: 'Rigorous testing, deployment, and handover. Post-launch support included for 30 days.' },
+  { number: '01', title: 'Understand', desc: 'We listen, observe, and explore your business needs and current conditions — to give you a solution that actually makes an impact.' },
+  { number: '02', title: 'Solution & Concept', desc: 'We formulate the solution and create a detailed blueprint. Your feedback at this stage shapes the exact direction before we build.' },
+  { number: '03', title: 'Develop', desc: 'Our experienced team gets to work — with regular progress reports so you always know where things stand. You focus on your business; we handle the build.' },
+  { number: '04', title: 'Deliver & Evaluate', desc: 'We deliver with excellence and stay by your side after launch — supporting you to achieve maximum results from your new digital solution.' },
 ];
 ---
 
 <BaseLayout
-  title="Gradien Digital Indonesia — Software House Bandar Lampung"
-  description="CV. Gradien Digital Indonesia adalah software house di Bandar Lampung. Kami membangun mobile app, website, ERP Odoo, AI integration, GIS, dan solusi digital lainnya untuk bisnis Indonesia dan global."
-  tags={["software house Bandar Lampung","jasa pembuatan aplikasi Lampung","web development Lampung","ERP Odoo Lampung","AI integration Indonesia","mobile app development","GIS Indonesia","Gradien Digital"]}
+  title="Gradien Digital Indonesia — Your Partner for Smarter Digital Solutions"
+  description="CV. Gradien Digital Indonesia membangun custom website, mobile app, dan enterprise system dengan AI sebagai bagian dari proses kami — solusi digital yang lebih cerdas untuk bisnis Indonesia."
+  tags={["software house Indonesia","jasa pembuatan aplikasi","web development","ERP Odoo","AI integration Indonesia","mobile app development","custom software","Gradien Digital"]}
   jsonLd={homeJsonLd}
 >
 
@@ -216,15 +242,15 @@ const processSteps = [
       <div class="hero-content">
         <div class="hero-badge">
           <span class="hero-badge-dot" aria-hidden="true"></span>
-          <span>Based in Bandar Lampung, Indonesia</span>
+          <span>Gerakan Digital Ekosistem Nusantara</span>
         </div>
         <h1 class="hero-title">
-          We Build<br/>
-          <span class="accent">Digital Products</span><br/>
-          That Matter
+          Your Partner for<br/>
+          <span class="accent">Smarter Digital</span><br/>
+          Solutions
         </h1>
         <p class="hero-sub">
-          From mobile apps to ERP systems, AI integration to GIS platforms — Gradien delivers end-to-end digital solutions for organizations across Indonesia.
+          We build custom websites, mobile apps, and enterprise systems — with AI embedded in our process so every solution works smarter for your business.
         </p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary">Start a Project</a>
@@ -253,25 +279,25 @@ const processSteps = [
             <div class="hero-card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
             </div>
-            <div class="hero-card-title">Mobile App Development</div>
-            <div class="hero-card-sub">Flutter · React Native · iOS · Android</div>
-            <span class="hero-card-pill">Flutter 3.22</span>
+            <div class="hero-card-title">Web Development</div>
+            <div class="hero-card-sub">Company Profile · Web App · Portal</div>
+            <span class="hero-card-pill">React · Laravel · Next.js</span>
+          </div>
+          <div class="hero-card">
+            <div class="hero-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            </div>
+            <div class="hero-card-title">Mobile Development</div>
+            <div class="hero-card-sub">iOS · Android · Cross-platform</div>
+            <span class="hero-card-pill">Flutter · React Native</span>
           </div>
           <div class="hero-card">
             <div class="hero-card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M22 2L12 12M15 2h7v7"/></svg>
             </div>
             <div class="hero-card-title">AI Integration</div>
-            <div class="hero-card-sub">LLMs · Computer Vision · NLP</div>
-            <span class="hero-card-pill">GPT-4o · LangChain</span>
-          </div>
-          <div class="hero-card">
-            <div class="hero-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 3v9h9"/></svg>
-            </div>
-            <div class="hero-card-title">GIS Solutions</div>
-            <div class="hero-card-sub">Spatial data · Mapping · Analytics</div>
-            <span class="hero-card-pill">PostGIS · Mapbox</span>
+            <div class="hero-card-sub">Smarter workflows · Intelligent systems</div>
+            <span class="hero-card-pill">Powered by AI</span>
           </div>
         </div>
       </div>
@@ -286,12 +312,12 @@ const processSteps = [
     <div class="trusted-inner">
       <span class="trusted-label">Trusted by</span>
       <div class="trusted-logos">
-        <span class="trusted-logo-item">Pemprov Lampung</span>
-        <span class="trusted-logo-item">PT Maju Bersama</span>
-        <span class="trusted-logo-item">LogiTrack</span>
-        <span class="trusted-logo-item">RS Urip Sumoharjo</span>
+        <span class="trusted-logo-item">DPD Gerindra Prov. Lampung</span>
+        <span class="trusted-logo-item">PT Tunas Dwipa Matra</span>
+        <span class="trusted-logo-item">PT Way Kanan Makmur</span>
         <span class="trusted-logo-item">Universitas Lampung</span>
-        <span class="trusted-logo-item">Bank Lampung</span>
+        <span class="trusted-logo-item">RSUD Dr. H. Bob Bazar</span>
+        <span class="trusted-logo-item">3I RTSP Construction</span>
       </div>
     </div>
   </div>
@@ -303,13 +329,27 @@ const processSteps = [
     <div class="services-header">
       <div>
         <div class="section-label">What We Do</div>
-        <h2 class="section-title">End-to-End Digital Services</h2>
+        <h2 class="section-title">Our Services</h2>
       </div>
-      <p class="section-desc">From concept to deployment, we cover every layer of your digital product — design, development, data, and intelligence.</p>
+      <p class="section-desc">Custom-built digital solutions — from web and mobile to AI-powered systems — designed around how your business actually works.</p>
     </div>
-    <div class="services-grid">
-      {services.map(({ icon, title, desc, tags }) => (
-        <div class="service-card">
+    <div class="section-sublabel">Core Services</div>
+    <div class="services-grid core-services">
+      {coreServices.map(({ icon, title, desc, tags, featured }) => (
+        <div class={`service-card${featured ? ' service-card--featured' : ''}`}>
+          <div class="service-icon" set:html={icon} aria-hidden="true"></div>
+          <h3 class="service-title">{title}</h3>
+          <p class="service-desc">{desc}</p>
+          <div class="service-tags">
+            {tags.map(t => <span class="service-tag">{t}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="section-sublabel" style="margin-top: 48px;">Extended Services</div>
+    <div class="services-grid extended-services">
+      {extendedServices.map(({ icon, title, desc, tags }) => (
+        <div class="service-card service-card--extended">
           <div class="service-icon" set:html={icon} aria-hidden="true"></div>
           <h3 class="service-title">{title}</h3>
           <p class="service-desc">{desc}</p>
@@ -328,12 +368,12 @@ const processSteps = [
     <div class="about-grid">
       <div class="about-content">
         <div class="section-label">About Gradien</div>
-        <h2 class="section-title light">Built by Engineers,<br/>Driven by Impact</h2>
+        <h2 class="section-title light">Built to Move<br/>Your Business Forward</h2>
         <p class="section-desc light">
-          Founded in 2020, CV. Gradien Digital Indonesia is a software house headquartered in Bandar Lampung. We work with government agencies, startups, and enterprises to build digital systems that solve real problems.
+          Founded in 2020, CV. Gradien Digital Indonesia — short for <em>Gerakan Digital Ekosistem Nusantara</em> — is a software house committed to building the digital ecosystem of Indonesia. We work with government agencies, enterprises, and growing businesses to build systems that solve real problems.
         </p>
         <p class="section-desc light" style="margin-top: 16px;">
-          Our team combines deep technical expertise with strong product thinking — so the software we ship doesn't just work, it works for your users.
+          We use AI throughout our development process — not as a product to sell, but as how we work — to deliver solutions that are smarter, more efficient, and built to grow with your business.
         </p>
         <a href="#contact" class="btn btn-primary" style="margin-top: 32px;">Work With Us</a>
       </div>
@@ -341,10 +381,10 @@ const processSteps = [
         <div class="section-label">Our Core Values</div>
         <div class="values-grid">
           {[
-            { icon: '🎯', title: 'Precision', desc: 'We obsess over the details — in code, in design, in communication.' },
-            { icon: '🤝', title: 'Partnership', desc: 'We treat every project as if it were our own business on the line.' },
-            { icon: '⚡', title: 'Speed', desc: 'Move fast without breaking things. Rapid iteration, solid foundations.' },
-            { icon: '🔒', title: 'Integrity', desc: 'Transparent pricing, honest timelines, no hidden surprises.' },
+            { icon: '🌱', title: 'Impact', desc: 'We provide value that transfers real benefits to your business and contributes to Indonesia\'s digital ecosystem.' },
+            { icon: '🏆', title: 'Excellence', desc: 'We put forward competence and quality — encouraging the team to improve continuously for every project.' },
+            { icon: '⚡', title: 'Challenged', desc: 'We believe in the passion of each individual and the drive to keep growing and contributing.' },
+            { icon: '🤝', title: 'Positivity', desc: 'Cooperation and mutual trust — we build a culture that encourages both our team and our clients.' },
           ].map(({ icon, title, desc }) => (
             <div class="value-card">
               <span class="value-icon" aria-hidden="true">{icon}</span>
@@ -409,15 +449,29 @@ const processSteps = [
     <div class="section-label">Technology</div>
     <h2 class="section-title">Our Tech Stack</h2>
     <p class="section-desc">We choose the right tools for the job — proven technologies that deliver performant, maintainable solutions.</p>
-    <div class="tech-grid">
-      {Object.entries(techStack).map(([category, items]) => (
-        <div class="tech-group">
-          <div class="tech-group-label">{category}</div>
-          <div class="tech-tags">
-            {items.map(item => <span class="tech-tag">{item}</span>)}
+  </div>
+  <div class="tech-marquee-wrapper">
+    <!-- Row 1: scroll left -->
+    <div class="tech-marquee-track">
+      <div class="tech-marquee-row tech-marquee-left">
+        {[...techStack.slice(0, 19), ...techStack.slice(0, 19)].map(({ name, logo }) => (
+          <div class="tech-logo-item">
+            <img src={logo} alt={name} class="tech-logo-img" loading="lazy" />
+            <span class="tech-logo-label">{name}</span>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+    </div>
+    <!-- Row 2: scroll right -->
+    <div class="tech-marquee-track">
+      <div class="tech-marquee-row tech-marquee-right">
+        {[...techStack.slice(19), ...techStack.slice(19)].map(({ name, logo }) => (
+          <div class="tech-logo-item">
+            <img src={logo} alt={name} class="tech-logo-img" loading="lazy" />
+            <span class="tech-logo-label">{name}</span>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
@@ -428,15 +482,12 @@ const processSteps = [
     <div class="section-label">What Clients Say</div>
     <h2 class="section-title light">Trusted by Organizations<br/>Across Indonesia</h2>
     <div class="testimonials-grid">
-      {testimonials.map(({ quote, name, role, initials }) => (
+      {testimonials.map(({ quote, role, initials }) => (
         <div class="testimonial-card">
           <blockquote class="testimonial-quote">"{quote}"</blockquote>
           <div class="testimonial-author">
             <div class="testimonial-avatar" aria-hidden="true">{initials}</div>
-            <div>
-              <div class="testimonial-name">{name}</div>
-              <div class="testimonial-role">{role}</div>
-            </div>
+            <div class="testimonial-role">{role}</div>
           </div>
         </div>
       ))}
@@ -662,7 +713,12 @@ const processSteps = [
   align-items: end; gap: 40px; margin-bottom: 56px;
 }
 @media (max-width: 700px) { .services-header { grid-template-columns: 1fr; } }
-.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.section-sublabel {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--text-muted); margin-bottom: 16px; margin-top: 48px;
+}
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 0; }
+.extended-services { grid-template-columns: repeat(3, 1fr); }
 @media (max-width: 1000px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .services-grid { grid-template-columns: 1fr; } }
 .service-card {
@@ -680,6 +736,17 @@ const processSteps = [
   transform: translateY(-4px); background: var(--white);
 }
 .service-card:hover::before { transform: scaleX(1); }
+.service-card--featured {
+  background: linear-gradient(135deg, var(--navy) 0%, #0a3a52 100%);
+  border-color: var(--teal);
+  color: var(--white);
+}
+.service-card--featured .service-title { color: var(--white); }
+.service-card--featured .service-desc { color: rgba(255,255,255,0.75); }
+.service-card--featured .service-icon :global(svg) { color: var(--teal-light); }
+.service-card--featured .service-tag { background: rgba(26,171,204,.2); color: var(--teal-light); }
+.service-card--featured:hover { background: linear-gradient(135deg, #0a2d42 0%, #0d4a65 100%); border-color: var(--teal-light); }
+.service-card--extended { background: var(--white); }
 .service-icon :global(svg) {
   width: 28px; height: 28px; color: var(--teal);
   margin-bottom: 20px; display: block;
@@ -760,25 +827,43 @@ const processSteps = [
 .process-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
 
 /* ── Tech Stack ── */
-#tech { padding: 96px 0; background: var(--white); }
-.tech-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
-  margin-top: 48px;
+#tech { padding: 96px 0 80px; background: var(--white); }
+#tech .container { margin-bottom: 40px; }
+.tech-marquee-wrapper { display: flex; flex-direction: column; gap: 16px; overflow: hidden; }
+.tech-marquee-track { overflow: hidden; }
+.tech-marquee-row {
+  display: flex; gap: 16px; width: max-content;
 }
-@media (max-width: 900px) { .tech-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 500px) { .tech-grid { grid-template-columns: 1fr; } }
-.tech-group-label {
-  font-size: 12px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .1em; color: var(--text-muted); margin-bottom: 12px;
+.tech-marquee-left { animation: marquee-left 30s linear infinite; }
+.tech-marquee-right { animation: marquee-right 30s linear infinite; }
+.tech-marquee-row:hover { animation-play-state: paused; }
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
-.tech-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.tech-tag {
-  background: var(--gray-light); border: 1px solid var(--gray-mid);
-  border-radius: 6px; padding: 6px 12px; font-size: 13px;
-  font-weight: 500; color: var(--text);
-  transition: background .2s, color .2s;
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
-.tech-tag:hover { background: rgba(26,171,204,.1); color: var(--teal); border-color: transparent; }
+.tech-logo-item {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 14px 16px; min-width: 90px;
+  border-radius: 12px;
+  border: 1px solid var(--gray-mid);
+  background: var(--gray-light);
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+  flex-shrink: 0;
+}
+.tech-logo-item:hover {
+  border-color: var(--teal);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(26,171,204,.12);
+}
+.tech-logo-img { width: 32px; height: 32px; object-fit: contain; }
+.tech-logo-label {
+  font-size: 11px; font-weight: 500; color: var(--text-muted);
+  text-align: center; line-height: 1.3; white-space: nowrap;
+}
 
 /* ── Testimonials ── */
 #testimonials { background: var(--navy); padding: 96px 0; }
