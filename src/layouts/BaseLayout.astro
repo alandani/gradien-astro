@@ -8,16 +8,19 @@ export interface Props {
   description: string;
   canonical?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   ogType?: 'website' | 'article';
   publishedDate?: string;
   modifiedDate?: string;
   author?: string;
   tags?: string[];
   noindex?: boolean;
-  jsonLd?: object;
+  jsonLd?: object | object[];
+  preloadImage?: string;
 }
 
-const { jsonLd, ...seoProps } = Astro.props;
+const { jsonLd, preloadImage, ...seoProps } = Astro.props;
+const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
 <!DOCTYPE html>
@@ -32,10 +35,24 @@ const { jsonLd, ...seoProps } = Astro.props;
 
   <SEO {...seoProps} />
 
-  <!-- JSON-LD Structured Data -->
-  {jsonLd && (
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <!-- Preload hero image for LCP -->
+  {preloadImage && (
+    <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />
   )}
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-209ZZ6S01D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-209ZZ6S01D');
+  </script>
+
+  <!-- JSON-LD Structured Data -->
+  {jsonLdItems.map(item => (
+    <script type="application/ld+json" set:html={JSON.stringify(item)} />
+  ))}
 
   <!-- RSS Feed -->
   <link rel="alternate" type="application/rss+xml" title="Gradien Digital Indonesia Blog" href="/rss.xml" />

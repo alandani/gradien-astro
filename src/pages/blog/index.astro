@@ -13,12 +13,12 @@ const blogJsonLd = {
   "@context": "https://schema.org",
   "@type": "Blog",
   "name": "Gradien Digital Indonesia Blog",
-  "description": "Insights on software development, AI integration, GIS, ERP, and the Indonesian tech industry from the Gradien Digital team.",
+  "description": "Deep dives into software development, AI integration, and ERP — real projects, real lessons, written by the Gradien Digital engineering team.",
   "url": "https://gradien.co/blog",
   "publisher": {
     "@type": "Organization",
     "name": "CV. Gradien Digital Indonesia",
-    "logo": { "@type": "ImageObject", "url": "https://gradien.co/logo.png" }
+    "logo": { "@type": "ImageObject", "url": "https://gradien.co/favicon.svg" }
   },
   "blogPost": posts.map(p => ({
     "@type": "BlogPosting",
@@ -32,9 +32,9 @@ const blogJsonLd = {
 ---
 
 <BaseLayout
-  title="Blog — Gradien Digital Indonesia"
-  description="Insights on software development, AI integration, GIS, ERP Odoo, and the Indonesian tech industry from the Gradien Digital engineering team."
-  tags={["software house blog","GIS Indonesia","AI integration","Odoo ERP","web development Indonesia"]}
+  title="Blog — Gradien Digital"
+  description="Deep dives into software development, AI integration, and ERP — real projects, real lessons, written by our engineering team."
+  tags={["software development blog","AI integration","Odoo ERP","web development","mobile development","tech insights","case studies"]}
   jsonLd={blogJsonLd}
 >
 
